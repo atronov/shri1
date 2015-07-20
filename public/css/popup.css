@@ -1,0 +1,46 @@
+.popup {
+    margin: 75px auto;
+    padding: 20px;
+    background: #fff;
+    border: 1px solid #666;
+    width: 400px;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+    position: relative;
+}
+
+.popup__header {
+    margin-top: 0;
+    color: #666;
+    font-family: "Trebuchet MS", Tahoma, Arial, sans-serif;
+}
+
+.popup__background {
+    z-index: 5;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.5);
+    transition: opacity 200ms;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.popup__background:target {
+    visibility: visible;
+    opacity: 1;
+}
+
+.popup__cancel {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    top: 0;
+    left: 0;
+    cursor: default;
+}
+
+.popup__content {
+    width: 100%;
+}

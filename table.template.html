@@ -1,0 +1,113 @@
+<div class="flight-table">
+    <input type="checkbox" id="arrival-checkbox" class="flight-table__checkbox arrival-filter" name="arrival" checked>
+    <input type="checkbox" id="departure-checkbox" class="flight-table__checkbox departure-filter" name="departure" checked>
+    <table class="flight-table__table table table--vertical-select table--horizontal-select">
+        <thead>
+            <tr class="table__row-header">
+                <th class="flight-table__type-header table__cell-header">
+                    <div class="flight-table__type-select-button">
+                        <img class="flight-table__type-select-img" src="/img/expand.svg" alt="" />
+                        <div class="flight-table__type-select-group">
+                            <label class="arrival-filter__label element" for="arrival-checkbox">прибытия</label>
+                            <label class="departure-filter__label element" for="departure-checkbox">отправления</label>
+                        </div>
+                    </div>
+                </th>
+                <th class="flight-table__number-header table__cell-header align-center">#</th>
+                <th class="flight-table__company-header table__cell-header">
+                    <span class="large-only">Авиакомпания</span>
+                    <span class="small-only">Авиакомп.</span>
+                </th>
+                <th class="flight-table__plane-header table__cell-header">Возд. судно</th>
+                <th class="flight-table__airport-header table__cell-header">
+                    <span class="large-only">Направление</span>
+                    <span class="small-only">Напр-е</span>
+                </th>
+                <th class="flight-table__time-header table__cell-header">Время</th>
+                <th class="flight-table__status-header table__cell-header">Статус</th>
+                <th class="flight-table__info-header table__cell-header">
+                    <span class="large-only">Информация</span>
+                    <span class="small-only">Инф-я</span>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each this}}
+            <tr class="table__row {{type}}">
+                <td class="flight-table__type-cell table__cell align-center">
+                    <a class="table__cell-content" href="#popup{{number}}">
+                        <img class="flight-table__type-image" src="/img/{{type}}.svg" alt="{{type}}" />
+                    </a>
+                </td>
+                <td class="flight-table__number-cell table__cell align-center">
+                    <a class="table__cell-content popup__link" href="#popup{{number}}">{{number}}</a></td>
+                <td class="flight-table__company-cell table__cell">
+                    <a class="table__cell-content popup__link" href="#popup{{number}}">
+                        <div class="flight-table__company-logo">
+                            <img src="{{company.logo}}">
+                        </div>
+                        <span class="flight-table__company-title large-only">{{company.title}}</span>
+                    </a>
+                </td>
+                <td class="flight-table__plane-cell table__cell">
+                    <a class="table__cell-content popup__link" href="#popup{{number}}">
+                        <span class="flight-table__plane-title">{{plane.title}}</span>
+                        <span class="flight-title__plane-short">{{plane.short}}</span>
+                    </a>
+                </td>
+                <td class="flight-table__airport-cell table__cell">
+                    <a class="table__cell-content popup__link" href="#popup{{number}}">{{airport}}</a>
+                </td>
+                <td class="flight-table__time-cell align-center table__cell">
+                    <a class="table__cell-content popup__link" href="#popup{{number}}">{{time}}</a>
+                </td>
+                <td class="flight-table__status-cell align-center table__cell">
+                    <a class="table__cell-content popup__link" href="#popup{{number}}">{{status}}</a>
+                </td>
+                <td class="flight-table__info-cell align-center table__cell">
+                    <a class="table__cell-content popup__link" href="#popup{{number}}">{{info}}</a>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+    {{#each this}}
+    <div id="popup{{number}}" class="popup__background">
+        <div class="popup">
+            <h2 class="popup__header">Ресй №{{number}}</h2>
+            <table class="popup__content table">
+                <tbody>
+                    <tr class="table__row">
+                        <td class="table__cell"><div class="table__cell-content bold">Время</div></td>
+                        <td class="table__cell"><div class="table__cell-content">{{time}}</div></td>
+                    </tr>
+                    <tr class="table__row">
+                        <td class="table__cell"><div class="table__cell-content bold">Авиокомпания</div></td>
+                        <td class="table__cell"><div class="table__cell-content">
+                            <img src="{{company.bigLogo}}" alt=""/>
+                            <div>{{company.title}}</div>
+                        </div></td>
+                    </tr>
+                    <tr class="table__row">
+                        <td class="table__cell"><div class="table__cell-content bold">Маршрут рейса</div></td>
+                        <td class="table__cell"><div class="table__cell-content">{{rout}}</div></td>
+                    </tr>
+                    <tr class="table__row">
+                        <td class="table__cell"><div class="table__cell-content bold">Статус</div></td>
+                        <td class="table__cell"><div class="table__cell-content">{{status}}</div></td>
+                    </tr>
+                    <tr class="table__row">
+                        <td class="table__cell"><div class="table__cell-content bold">Информация</div></td>
+                        <td class="table__cell"><div class="table__cell-content">{{info}}</div></td>
+                    </tr>
+                    <tr class="table__row">
+                        <td class="table__cell"><div class="table__cell-content bold">Воздушное судно</div></td>
+                        <td class="table__cell"><div class="table__cell-content">{{plane.short}}</div></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <a class="popup__cancel" href="#"></a>
+    </div>
+    {{/each}}
+</div>

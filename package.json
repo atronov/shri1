@@ -1,0 +1,16 @@
+{
+  "name": "shri1",
+  "scripts": {
+    "start": "node ./app.js"
+  },
+  "dependencies": {
+    "debug": "~2.1.1",
+    "express": "~4.12.2",
+    "handlebars": "^3.0.3",
+    "jsdom": ">= 0.1.23 < 4.0.0",
+    "promise": "^7.0.3"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.7.13"
+  }
+}

@@ -1,0 +1,30 @@
+html, body {
+    height: 100%;
+    background: #f0f0f0;
+    color: #444;
+    font: 100%/30px 'Helvetica Neue', helvetica, arial, sans-serif;
+    text-shadow: 0 1px 0 #fff;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+.align-center {
+    text-align: center !important;
+}
+
+.table-row:nth-child(n+1) {
+    background-color: lightblue;
+}
+
+.element {
+    white-space: nowrap;
+    padding: 10px 15px;
+    display: block;
+    cursor: pointer;
+}
+
+.bold {
+    font-weight: 700;
+}

@@ -40,6 +40,10 @@
     height: 32px;
 }
 
+.flight-table__plane-header {
+    min-width: 100px;
+}
+
 .flight-table__type-select-button {
     position: absolute;
     display: block;

@@ -7,8 +7,11 @@ var zlib    = require("zlib");
 var Promise = require("promise");
 var http    = require("http");
 var URL     = require("url");
-var jQuery  = fs.readFileSync("./jquery-2.1.4.min.js", "utf8");
 
+var url = "http://www.svo.aero/";
+var jQueryUrl = "http://code.jquery.com/jquery-2.1.4.min.js";
+var jQuery = ""; // будет загружен при запуске
+var resultFile = "table.json";
 
 /**
 * Поумолчанию jsdom не умеет работать с gzip, пришлось создать функцию для разжатия.
@@ -122,15 +125,26 @@ function addFullInfoAll(rootUrl, rows) {
     return Promise.all(rowPromises);
 }
 
-var url = "http://www.svo.aero/";
+function loadJQuery() {
+    return httpGet(jQueryUrl)
+        .then(function (script) {
+            jQuery = script;
+        });
+}
 
-httpGet(url)
+loadJQuery()
+    // загружаем все табло
+    .then(httpGet.bind(null, url))
+    // парсим
     .then(parseDOM)
+    // и читаем нужные поля
     .then(readTable)
+    // для каждго рейса получаем полную информация
     .then(addFullInfoAll.bind(null, url))
     .then(resolveUrls.bind(null, url))
+    // сохраняем результат как json файл на диск
     .then(JSON.stringify)
-    .then(fs.writeFile.bind(fs, "table.json"))
+    .then(fs.writeFile.bind(fs, resultFile))
     .catch(function(er) {
         console.error(er);
         console.error(er.message);

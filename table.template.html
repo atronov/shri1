@@ -12,9 +12,20 @@
                             <label class="departure-filter__label element" for="departure-checkbox">отправления</label>
                         </div>
                     </div>
-                    <div class="my-cell"></div>
+                    <div class="my-cell">
+                        <div class="flight-table__type-select-button">
+                            <img class="flight-table__type-select-img" src="/img/expand.svg" alt="" />
+                            <div class="flight-table__type-select-group">
+                                <label class="arrival-filter__label element" for="arrival-checkbox">прибытия</label>
+                                <label class="departure-filter__label element" for="departure-checkbox">отправления</label>
+                            </div>
+                        </div>
+                    </div>
                 </th>
-                <th class="flight-table__number-header table__cell-header align-center">#</th>
+                <th class="flight-table__number-header table__cell-header align-center">
+                    #
+                    <div class="my-cell">#</div>
+                </th>
                 <th class="flight-table__company-header table__cell-header">
                     <span class="large-only">Авиакомпания</span>
                     <span class="small-only">Авиакомп.</span>
@@ -25,9 +36,7 @@
                 </th>
                 <th class="flight-table__plane-header table__cell-header">
                     Возд. судно
-                    <div class="my-cell">
-                    Возд. судно
-                    </div>
+                    <div class="my-cell">Возд. судно</div>
                 </th>
                 <th class="flight-table__airport-header table__cell-header">
                     <span class="large-only">Направление</span>

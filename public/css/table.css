@@ -79,9 +79,9 @@
 
 .my-cell {
     position: absolute;
-    top: 100px;
+    top: 0;
     left: 0;
-    bottom: -100px;
+    bottom: 0;
     right: 0;
     background-color: #444;
     border: 1px solid #555;

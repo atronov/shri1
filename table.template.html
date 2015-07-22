@@ -75,8 +75,8 @@
                 </td>
                 <td class="flight-table__plane-cell table__cell">
                     <a class="table__cell-content popup__link" href="#popup{{number}}">
-                        <span class="flight-table__plane-title">{{plane.title}}</span>
-                        <span class="flight-title__plane-short">{{plane.short}}</span>
+                        <span class="large-only">{{plane.title}}</span>
+                        <span class="small-only">{{plane.short}}</span>
                     </a>
                 </td>
                 <td class="flight-table__airport-cell table__cell">
@@ -126,7 +126,7 @@
                     </tr>
                     <tr class="table__row">
                         <td class="table__cell"><div class="table__cell-content bold">Воздушное судно</div></td>
-                        <td class="table__cell"><div class="table__cell-content">{{plane.short}}</div></td>
+                        <td class="table__cell"><div class="table__cell-content">{{plane.title}}</div></td>
                     </tr>
                 </tbody>
             </table>

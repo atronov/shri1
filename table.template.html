@@ -5,14 +5,7 @@
         <thead>
             <tr class="table__row-header">
                 <th class="flight-table__type-header table__cell-header">
-                    <div class="flight-table__type-select-button">
-                        <img class="flight-table__type-select-img" src="/img/expand.svg" alt="" />
-                        <div class="flight-table__type-select-group">
-                            <label class="arrival-filter__label element" for="arrival-checkbox">прибытия</label>
-                            <label class="departure-filter__label element" for="departure-checkbox">отправления</label>
-                        </div>
-                    </div>
-                    <div class="my-cell">
+                    <div class="table__cell-header table__cell-header--fixed">
                         <div class="flight-table__type-select-button">
                             <img class="flight-table__type-select-img" src="/img/expand.svg" alt="" />
                             <div class="flight-table__type-select-group">
@@ -24,38 +17,38 @@
                 </th>
                 <th class="flight-table__number-header table__cell-header align-center">
                     #
-                    <div class="my-cell">#</div>
+                    <div class="table__cell-header table__cell-header--fixed align-center">#</div>
                 </th>
                 <th class="flight-table__company-header table__cell-header">
                     <span class="large-only">Авиакомпания</span>
                     <span class="small-only">Авиакомп.</span>
-                    <div class="my-cell">
+                    <div class="table__cell-header table__cell-header--fixed">
                         <span class="large-only">Авиакомпания</span>
                         <span class="small-only">Авиакомп.</span>
                     </div>
                 </th>
                 <th class="flight-table__plane-header table__cell-header">
                     Возд. судно
-                    <div class="my-cell">Возд. судно</div>
+                    <div class="table__cell-header table__cell-header--fixed">Возд. судно</div>
                 </th>
                 <th class="flight-table__airport-header table__cell-header">
                     <span class="large-only">Направление</span>
                     <span class="small-only">Напр-е</span>
-                    <div class="my-cell">
+                    <div class="table__cell-header table__cell-header--fixed">
                         <span class="large-only">Направление</span>
                         <span class="small-only">Напр-е</span>
                     </div>
                 </th>
                 <th class="flight-table__time-header table__cell-header">
                     Время
-                    <div class="my-cell">Время</div>
+                    <div class="table__cell-header table__cell-header--fixed">Время</div>
                 </th>
                 <th class="flight-table__status-header table__cell-header">Статус
-                    <div class="my-cell">Статус</div></th>
+                    <div class="table__cell-header table__cell-header--fixed">Статус</div></th>
                 <th class="flight-table__info-header table__cell-header">
                     <span class="large-only">Информация</span>
                     <span class="small-only">Инф-я</span>
-                    <div class="my-cell">
+                    <div class="table__cell-header table__cell-header--fixed">
                         <span class="large-only">Информация</span>
                         <span class="small-only">Инф-я</span>
                     </div>
@@ -67,7 +60,7 @@
             <tr class="table__row {{type}}">
                 <td class="flight-table__type-cell table__cell align-center">
                     <a class="table__cell-content" href="#popup{{number}}">
-                        <img class="flight-table__type-image" src="/img/{{type}}.svg" alt="{{type}}" />
+                        <img class="flight-table__type-img" src="/img/{{type}}.svg" alt="{{type}}" />
                     </a>
                 </td>
                 <td class="flight-table__number-cell table__cell align-center">

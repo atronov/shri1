@@ -1,104 +1,103 @@
 .flight-table {
     overflow: hidden;
+    /* минимальный размер, чтобы не обрезать drop-box фильтра, когда таблица пустая */
     min-height: 300px;
 }
+    .flight-table__table {
+        width: 100%;
+        min-width: 600px;
+        max-width: 1200px;
+        table-layout: fixed;
+    }
 
-.flight-table__table {
-    width: 100%;
-    min-width: 600px;
-    max-width: 1200px;
-    table-layout: fixed;
-}
+        .flight-table__type-header {
+            width: 32px;
+            z-index: 4;
+        }
 
-.flight-table__company-logo {
-    display: inline-block;
-}
+            /* кнопка для открытия drop-box с фильтрами */
+            .flight-table__type-select-button {
+                position: absolute;
+                display: block;
+                width: 16px;
+                height: 16px;
+                top: 50%;
+                left: 50%;
+                margin-top: -8px;
+                margin-left: -8px;
+            }
 
-.flight-table__number-header {
-    width: 32px;
-}
+            /* анимация поворота кнопки раскрытия drop-box */
+            .flight-table__type-select-button:hover > .flight-table__type-select-img {
+                transform: rotate(-180deg);
+            }
 
-.flight-table__type-header {
-    width: 32px;
-    z-index: 4;
-}
+                .flight-table__type-select-img {
+                    width: 100%;
+                    height: 100%;
+                    transition: transform;
+                    transition-duration: 150ms;
+                }
 
-.flight-table__time-header {
-    width: 38px;
-}
+                .flight-table__type-select-group {
+                    display: none;
+                    position: absolute;
+                    left: 0;
+                    top: 100%;
+                    background-color: #444;
+                    border: 1px solid #555;
+                }
 
-.flight-table__type-image {
-    height: 32px;
-}
+                /* показываем drop-box */
+                .flight-table__type-select-button:hover > .flight-table__type-select-group {
+                    display: inline-block !important;
+                }
 
-.flight-table__type-header {
-    position: relative;
-}
+        .flight-table__number-header {
+            width: 32px;
+        }
 
-.flight-table__expand-button {
-    width: 32px;
-    height: 32px;
-}
+        .flight-table__company-header {}
 
-.flight-table__plane-header {
-    min-width: 100px;
-}
+            .flight-table__company-logo {
+                display: inline-block;
+            }
 
-.flight-table__type-select-button {
-    position: absolute;
-    display: block;
-    width: 16px;
-    height: 16px;
-    top: 50%;
-    left: 50%;
-    margin-top: -8px;
-    margin-left: -8px;
-}
+        .flight-table__time-header {
+            width: 38px;
+        }
 
-.flight-table__type-select-img {
-    width: 100%;
-    height: 100%;
-    transition: transform;
-    transition-duration: 150ms;
-}
 
-.flight-table__type-select-group {
-    display: none;
-    position: absolute;
-    left: 0;
-    top: 100%;
-    background-color: #444;
-    border: 1px solid #555;
-}
+        /* иконка взлёта или посадки */
+        .flight-table__type-img {
+            height: 32px;
+        }
 
-.flight-table__type-select-button:hover > .flight-table__type-select-img {
-    transform: rotate(-180deg);
-}
-
-.flight-table__type-select-button:hover > .flight-table__type-select-group {
-    display: inline-block !important;
-}
-
+/* скрываем реальный checkbox */
 .flight-table__checkbox {
     position: absolute;
     top: -9999px;
     left: -9999px;
 }
 
+/* 3 правила ниже -  фильтрация таблицы через CSS */
+
 .departure-filter:not(:checked) ~ .table .departure-filter__label:before,
 .arrival-filter:not(:checked) ~ .table .arrival-filter__label:before {
-    content: "скрыть ";
+    content: "показать ";
 }
 
 .departure-filter:checked ~ .table .departure-filter__label:before,
 .arrival-filter:checked ~ .table .arrival-filter__label:before {
-    content: "показать ";
+    content: "скрыть ";
 }
 
 .departure-filter:not(:checked) ~ .table .departure.table__row,
 .arrival-filter:not(:checked) ~ .table .arrival.table__row {
     display: none;
 }
+
+/* при маленькой ширине показываем только картинку и выравниваем по центру */
 @media screen and (max-width: 900px) {
     .flight-table__company-logo {
         display: block;

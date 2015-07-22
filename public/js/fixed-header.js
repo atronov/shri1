@@ -3,7 +3,7 @@
  */
 $(document).on("ready", function() {
     var $headerRow = $(".table__row-header");
-    var $fixedHeaders = $headerRow.find(".my-cell");
+    var $fixedHeaders = $headerRow.find(".table__cell-header--fixed");
     $(document).on("scroll resize", function() {
         var windowTop =  $headerRow.offset().top - $(window).scrollTop();
         if (windowTop < 0) {

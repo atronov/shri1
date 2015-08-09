@@ -11,11 +11,11 @@ app.use(express.static("public"));
 app.use("/table.json", express.static("table.json"));
 
 app.get('/', function(req, res) {
-    var tableSource = fs.readFileSync("table.template.html", "utf8");
-    var blankSource = fs.readFileSync("blank.template.html", "utf8");
-    var tableData = JSON.parse(fs.readFileSync("table.json", "utf8"));
-    var pageHtml = Handlebars.compile(tableSource)(tableData);
-    pageHtml = Handlebars.compile(blankSource)(pageHtml);
+    var tableSource = fs.readFileSync("flights.template.html", "utf8");
+    var pageSource = fs.readFileSync("page.template.html", "utf8");
+    var tableData = JSON.parse(fs.readFileSync("flights.json", "utf8"));
+    Handlebars.registerPartial("flights", tableSource);
+    var pageHtml = Handlebars.compile(pageSource)(tableData);
     res.send(pageHtml);
 });
 

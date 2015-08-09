@@ -8,11 +8,11 @@ var Promise = require("promise");
 var http    = require("http");
 var URL     = require("url");
 
-var url = "http://www.svo.aero/";
 var jQueryUrl = "http://code.jquery.com/jquery-2.1.4.min.js";
 var jQuery = ""; // будет загружен при запуске
-var resultFile = "table.json";
-var planes = [];
+
+var flightsFile = "flights.json";
+var planesFile = "planes.json";
 
 /**
 * Поумолчанию jsdom не умеет работать с gzip, пришлось создать функцию для разжатия.
@@ -41,8 +41,13 @@ function httpGet(url) {
             });
         }).on("error", reject);
     });
-};
+}
 
+/**
+ *
+ * @param html
+ * @return {}
+ */
 function parseDOM(html) {
     return new Promise(function(resolve, reject) {
         jsdom.env({
@@ -54,9 +59,9 @@ function parseDOM(html) {
                 }
         });
     });
-};
+}
 
-function readTable(window) {
+function readFlights(window) {
     var $ = window.$;
     var rows = [];
     $(".content-main").find(".sA, .sD").each(function (ind) {
@@ -87,6 +92,11 @@ function readTable(window) {
     return rows;
 }
 
+/**
+ * Читаем список самолётов со страницы
+ * @param window объект window страницы с самолётами
+ * @returns {Array} "сырой" список воздушных судов
+ */
 function readPlanes(window) {
     var $ = window.$;
     var planes = [];
@@ -126,10 +136,16 @@ function readPlanes(window) {
             titles: titles
         });
     });
+    // такого самолёта нет в списке, добавляем его сами
     planes.push({ shorts: ["Су 100-90"],  titles: ["Сухой Суперджет 100-90"] })
     return planes;
 }
 
+/**
+ * В список самоёлтов добалвяем русские абривеатуры и названия
+ * @param planes
+ * @returns {*}
+ */
 function addRussians(planes) {
     var engToRus = [
         ["Boeing", "Боинг"],
@@ -150,11 +166,17 @@ function addRussians(planes) {
     return planes;
 }
 
-function loadPlanes() {
+function loadPlanesFromDisk() {
     var planesText = fs.readFileSync(planesFile, "utf8");
-    planes = JSON.parse(planesText);
+    return JSON.parse(planesText);
 }
 
+/**
+ * Исправляем URL
+ * @param rootUrl {string} корневой URL сайта с таблом
+ * @param rows {} записи в таблице
+ * @returns {}
+ */
 function resolveUrls(rootUrl, rows) {
     rows.forEach(function(row) {
         if (row.company.logo) row.company.logo = URL.resolve(rootUrl, row.company.logo);
@@ -164,15 +186,27 @@ function resolveUrls(rootUrl, rows) {
     return rows;
 }
 
+/**
+ * Для каджого рейса добавляем дополнительную инфораияю
+ * @param rootUrl {string} корневой URL сайта с таблом
+ * @param row {} объект рейса
+ * @return
+ */
 function addFullInfo(rootUrl, row) {
     if (row.flightUrl) {
         var url = URL.resolve(rootUrl, row.flightUrl);
         return httpGet(url)
             .then(parseDOM)
             .then(readFullInfo.bind(null, row));
-    };
+    }
 }
 
+/**
+ * Читаем дополнительную информацию о рейсе со страницы рейса
+ * @param row строка описывающая рейс
+ * @param window объект window страницы рейса
+ * @returns {*}
+ */
 function readFullInfo(row, window) {
     var $ = window.$;
     var content = $(".content");
@@ -186,6 +220,12 @@ function readFullInfo(row, window) {
     return row;
 }
 
+/**
+ * Для каждого рейса запускаем
+ * @param rootUrl
+ * @param rows {Array} рейсы
+ * @returns {Promise} завершается, когда все рейсы загрузятся
+ */
 function addFullInfoAll(rootUrl, rows) {
     var rowPromises = [];
     rows.forEach(function(row) {
@@ -195,19 +235,29 @@ function addFullInfoAll(rootUrl, rows) {
     return Promise.all(rowPromises);
 }
 
-function matchPlanes(flights) {
+/**
+ * Пробуем для каждого рейса найти самолёт.
+ * Способ получен эксперементально.
+ * @param planes {Array} списко воз. судов
+ * @param flights {Array} рейсы
+ * @returns {Array} рейсы
+ */
+function matchPlanes(planes, flights) {
+    var testMatches = function(titleFromFlights, titleFromPlanes) {
+        return titleFromFlights.trim().replace(/\.$/, "") === titleFromPlanes;
+    };
     flights.forEach(function(flight){
         if (flight.plane.short === "" && flight.plane.title === "") return;
         for (var i in planes) {
             var plane = planes[i];
             // пробуем связать по короткому имени
-            var matches = plane.shorts.some(function(short) { return flight.plane.short === short; });
+            var matches = plane.shorts.some(testMatches.bind(null, flight.plane.short));
             if (matches) {
                 flight.plane.title = plane.titles[0];
                 return;
             }
             // пробуем связать по длинному имени
-            matches = plane.titles.some(function(title) { return flight.plane.title === title; });
+            matches = plane.titles.some(testMatches.bind(null, flight.plane.title));
             if (matches) {
                 flight.plane.short = plane.shorts[0];
                 return;
@@ -218,6 +268,9 @@ function matchPlanes(flights) {
     return flights;
 }
 
+/**
+ * Загружаем jquery для легкого парсинга страниц.
+ */
 function loadJQuery() {
     return httpGet(jQueryUrl)
         .then(function (script) {
@@ -225,22 +278,27 @@ function loadJQuery() {
         });
 }
 
+/**
+ * Загружаем список рейсов и сохраняем на диск.
+ * До этого уже должен быть загружен список воздушных судов.
+ */
 function downloadTable() {
-    loadPlanes();
+    var flightsUrl = "http://www.svo.aero/";
+    var planes =loadPlanesFromDisk();
     loadJQuery()
         // загружаем все табло
-        .then(httpGet.bind(null, url))
+        .then(httpGet.bind(null, flightsUrl))
         // парсим
         .then(parseDOM)
         // и читаем нужные поля
-        .then(readTable)
+        .then(readFlights)
         // для каждго рейса получаем полную информация
-        .then(addFullInfoAll.bind(null, url))
-        .then(resolveUrls.bind(null, url))
-        .then(matchPlanes)
+        .then(addFullInfoAll.bind(null, flightsUrl))
+        .then(resolveUrls.bind(null, flightsUrl))
+        .then(matchPlanes.bind(null, planes))
         // сохраняем результат как json файл на диск
         .then(JSON.stringify)
-        .then(fs.writeFile.bind(fs, resultFile))
+        .then(fs.writeFile.bind(fs, flightsFile))
         .catch(function (er) {
             console.error(er);
             console.error(er.message);
@@ -248,12 +306,13 @@ function downloadTable() {
         });
 }
 
-var planesUrl = "http://skalolaskovy.narod.ru/avia/type_of_aircrafts.html";
-var planesFile = "planes.json";
-
+/**
+ * Загружаем список создушных судов и сохраняем на диск
+ */
 function downloadPlanes() {
+    var planesUrl = "http://skalolaskovy.narod.ru/avia/type_of_aircrafts.html";
     loadJQuery()
-        // загружаем все табло
+        // загружаем все самолёты
         .then(httpGet.bind(null, planesUrl))
         // парсим
         .then(parseDOM)
@@ -268,6 +327,19 @@ function downloadPlanes() {
         });
 }
 
-// downloadPlanes();
-downloadTable();
+var commands = {
+    "flights": downloadTable,
+    "planes": downloadPlanes()
+};
+var commandsArgs = process.argv.slice(2);
+for (var i in commandsArgs) {
+    var command = commandsArgs[i];
+    if (command in commands) {
+        commands[command]();
+    } else {
+        console.error("Cannot find command", command);
+    }
+}
+
+
 

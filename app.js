@@ -8,7 +8,7 @@ var app = express();
 app.use(express.static("public"));
 
 // я положил в виде файла, но в жизни надо было бы использовать какойто REST HTTP
-app.use("/table.json", express.static("table.json"));
+app.use("/flights.json", express.static("flights.json"));
 
 app.get('/', function(req, res) {
     var tableSource = fs.readFileSync("flights.template.html", "utf8");

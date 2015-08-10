@@ -327,17 +327,22 @@ function downloadPlanes() {
         });
 }
 
-var commands = {
-    "flights": downloadTable,
-    "planes": downloadPlanes()
-};
-var commandsArgs = process.argv.slice(2);
-for (var i in commandsArgs) {
-    var command = commandsArgs[i];
-    if (command in commands) {
-        commands[command]();
-    } else {
-        console.error("Cannot find command", command);
+
+if (require.main === module) {
+
+    var commands = {
+        "flights": downloadTable,
+        "planes": downloadPlanes
+    };
+
+    var commandsArgs = process.argv.slice(2);
+    for (var i in commandsArgs) {
+        var command = commandsArgs[i];
+        if (command in commands) {
+            commands[command]();
+        } else {
+            console.error("Cannot find command", command);
+        }
     }
 }
 

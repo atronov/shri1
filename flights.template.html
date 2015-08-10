@@ -70,26 +70,26 @@
                         <div class="flight-table__company-logo">
                             <img src="{{company.logo}}">
                         </div>
-                        <span class="flight-table__company-title large-only">{{company.title}}</span>
+                        <span class="flight-table__company-title large-only">{{{noEmpty company.title}}}</span>
                     </a>
                 </td>
                 <td class="flight-table__plane-cell table__cell">
                     <a class="table__cell-content popup__link" href="#popup{{number}}">
-                        <span class="large-only">{{plane.title}}</span>
-                        <span class="small-only">{{plane.short}}</span>
+                        <span class="large-only">{{{noEmpty plane.title}}}</span>
+                        <span class="small-only">{{{noEmpty plane.short}}}</span>
                     </a>
                 </td>
                 <td class="flight-table__airport-cell table__cell">
-                    <a class="table__cell-content popup__link" href="#popup{{number}}">{{airport}}</a>
+                    <a class="table__cell-content popup__link" href="#popup{{number}}">{{{noEmpty airport}}}</a>
                 </td>
                 <td class="flight-table__time-cell align-center table__cell">
-                    <a class="table__cell-content popup__link" href="#popup{{number}}">{{time}}</a>
+                    <a class="table__cell-content popup__link" href="#popup{{number}}">{{{noEmpty time}}}</a>
                 </td>
                 <td class="flight-table__status-cell align-center table__cell">
-                    <a class="table__cell-content popup__link" href="#popup{{number}}">{{status}}</a>
+                    <a class="table__cell-content popup__link" href="#popup{{number}}">{{{noEmpty status}}}</a>
                 </td>
                 <td class="flight-table__info-cell align-center table__cell">
-                    <a class="table__cell-content popup__link" href="#popup{{number}}">{{info}}</a>
+                    <a class="table__cell-content popup__link" href="#popup{{number}}">{{{noEmpty info}}}</a>
                 </td>
             </tr>
             {{/each}}

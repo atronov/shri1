@@ -15,6 +15,10 @@ app.get('/', function(req, res) {
     var pageSource = fs.readFileSync("page.template.html", "utf8");
     var tableData = JSON.parse(fs.readFileSync("flights.json", "utf8"));
     Handlebars.registerPartial("flights", tableSource);
+    // вместо пустого значения вставляем пробел, иначе не работает выделение строки, если ячейка пустая
+    Handlebars.registerHelper("noEmpty", function(value) {
+        return value || "&nbsp;";
+    });
     var pageHtml = Handlebars.compile(pageSource)(tableData);
     res.send(pageHtml);
 });

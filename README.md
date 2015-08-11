@@ -19,4 +19,4 @@ HTML генерируется через [Handlebars](http://handlebarsjs.com/) 
 Когда контент загружен, можно запустить сервер:
 `nodejs bin/www`
 
-По умолчанию, сервер запустится на [](http://localhost:3000).
+По умолчанию, сервер запустится на [http://localhost:3000](http://localhost:3000).

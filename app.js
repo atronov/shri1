@@ -16,6 +16,8 @@ app.get('/', function(req, res) {
     var tableData = JSON.parse(fs.readFileSync("flights.json", "utf8"));
     Handlebars.registerPartial("flights", tableSource);
     // вместо пустого значения вставляем пробел, иначе не работает выделение строки, если ячейка пустая
+    // это происходит из-за использования z-index и вертикальное выделение оказывается выше строки таблицы
+    // можно ипользовать z-index: -1, тогда вертикальное выделение уедет за таблицу, и неудобно будте делать фон строк
     Handlebars.registerHelper("noEmpty", function(value) {
         return value || "&nbsp;";
     });

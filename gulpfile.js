@@ -25,7 +25,7 @@ gulp.task("css", function() {
         .pipe(cssmin())
         .pipe(sourcemaps.write("."))
         .pipe(gulp.dest(dst));
-});    console.log("Hi!");    console.log("Hi!");    console.log("Hi!");
+});
 
 gulp.task("js", function() {
      gulp.src(path.join(src, "js/*.js"))

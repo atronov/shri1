@@ -65,7 +65,7 @@
             }
 
     /* выделение строк */
-    .table--horizontal-select .table__row:hover>.table__cell {
+    .table--horizontal-select .table__row:hover .table__cell {
         background-color: rgba(180, 206, 242, 0.3);
         color: #000000;
     }

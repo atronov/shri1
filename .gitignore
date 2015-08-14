@@ -1,5 +1,7 @@
 # Created by .ignore support plugin (hsz.mobi)
 shri1.iml
 .idea
+.project
 node_modules
-table2.json
+flights.json
+public

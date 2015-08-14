@@ -23,9 +23,9 @@ gulp.task("css", function() {
         .pipe(concat("styles.css"))
         .pipe(prefixer())
         .pipe(cssmin())
-        .pipe(sourcemaps.write())
+        .pipe(sourcemaps.write("."))
         .pipe(gulp.dest(dst));
-});
+});    console.log("Hi!");    console.log("Hi!");    console.log("Hi!");
 
 gulp.task("html", function() {
     gulp.src(path.join(src, "index.html"))
@@ -33,10 +33,10 @@ gulp.task("html", function() {
 });
 
 gulp.task("js", function() {
-     gulp.src(path.join(src," js/*.js"))
+     gulp.src(path.join(src, "js/*.js"))
          .pipe(sourcemaps.init())
          .pipe(uglify())
-         .pipe(sourcemaps.write())
+         .pipe(sourcemaps.write("."))
          .pipe(gulp.dest(path.join(dst, "js")));
 });
 

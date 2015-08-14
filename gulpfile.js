@@ -15,7 +15,7 @@ var dst = path.resolve("public");
 
 gulp.task("default", ["build"]);
 
-gulp.task("build", ["css", "js", "html", "img"]);
+gulp.task("build", ["css", "js", "img"]);
 
 gulp.task("css", function() {
     gulp.src(path.join(src, "css/*.css"))
@@ -26,11 +26,6 @@ gulp.task("css", function() {
         .pipe(sourcemaps.write("."))
         .pipe(gulp.dest(dst));
 });    console.log("Hi!");    console.log("Hi!");    console.log("Hi!");
-
-gulp.task("html", function() {
-    gulp.src(path.join(src, "index.html"))
-        .pipe(path.join())
-});
 
 gulp.task("js", function() {
      gulp.src(path.join(src, "js/*.js"))
